@@ -19,11 +19,11 @@
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
-            animation: fadeIn 2s ease-in-out infinite alternate;
+            animation: flicker 2s infinite;
         }
         .hacked h1 {
             font-size: 4rem;
-            text-shadow: 0 0 10px lime, 0 0 20px lime, 0 0 30px red;
+            text-shadow: 0 0 10px lime, 0 0 20px red, 0 0 30px lime;
         }
         .hacked p {
             font-size: 1.2rem;
@@ -45,9 +45,44 @@
             color: lime;
             animation: fall 3s linear infinite;
         }
-        @keyframes fadeIn {
-            0% { opacity: 0.5; }
-            100% { opacity: 1; }
+        .button-row {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .button {
+            padding: 10px 20px;
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-shadow: 0 0 5px black;
+            transition: background 0.3s;
+        }
+        .button:hover {
+            background: darkred;
+        }
+        .credits {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: lime;
+            text-align: center;
+        }
+        .credits img {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            margin: 0 5px;
+        }
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
         @keyframes fall {
             0% { top: -100px; }
@@ -56,24 +91,44 @@
     </style>
 </head>
 <body>
+    <audio id="background-sound" src="https://www.soundjay.com/button/sounds/button-09.mp3" loop autoplay></audio>
     <div class="matrix"></div>
     <div class="hacked">
         <h1>HACKED BY SPC_YASH</h1>
         <p>Your system has been compromised!</p>
-        <p>Relax, it's just a prank!</p>
+        <p>Relax, this is just a prank!</p>
+        <div class="button-row">
+            <button class="button">Hacked Photo</button>
+            <button class="button">Hacked Number</button>
+            <button class="button">Hacked Instagram</button>
+            <button class="button">Hacked Email</button>
+        </div>
+    </div>
+
+    <div class="credits">
+        <p>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" alt="Instagram Logo"> - by @spc_editzs7<br>
+            <img src="https://upload.wikimedia.org/wikipedia/en/0/0b/Roblox_logo.png" alt="Roblox Logo"> - by @impogi1258
+        </p>
     </div>
 
     <script>
         const matrix = document.querySelector('.matrix');
-        const matrixChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
         for (let i = 0; i < 300; i++) {
             const span = document.createElement('span');
-            span.textContent = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+            span.textContent = chars[Math.floor(Math.random() * chars.length)];
             span.style.left = Math.random() * 100 + 'vw';
-            span.style.animationDuration = Math.random() * 3 + 2 + 's';
-            span.style.animationDelay = Math.random() * 3 + 's';
+            span.style.animationDuration = Math.random() * 2 + 3 + 's';
+            span.style.fontSize = Math.random() * 20 + 10 + 'px';
             matrix.appendChild(span);
+        }
+
+        // Play sound effect when the page loads
+        window.onload = function() {
+            const audio = document.getElementById('background-sound');
+            audio.play();
         }
     </script>
 </body>
